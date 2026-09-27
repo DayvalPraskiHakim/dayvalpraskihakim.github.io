@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Continuous-Time FX Volatility Modeling — D. P. Hakim</title>
+<meta name="description" content="An Ornstein-Uhlenbeck SDE model of ASEAN-5 currency sensitivity to US monetary shocks.">
+<meta name="author" content="Dayval Praski Hakim">
+<meta name="theme-color" content="#0d100f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Continuous-Time FX Volatility Modeling — D. P. Hakim">
+<meta property="og:description" content="An Ornstein-Uhlenbeck SDE model of ASEAN-5 currency sensitivity to US monetary shocks.">
+<meta property="og:url" content="https://dayvalpraskihakim.github.io/fx-volatility.html">
+<link rel="canonical" href="https://dayvalpraskihakim.github.io/fx-volatility.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script defer src="site.js"></script>
+<script data-goatcounter="https://leq.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header shell">
+  <a class="wordmark" href="index.html">Dayval Praski Hakim</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<header class="paper-head shell split">
+  <div class="margin"><a class="back" href="index.html#projects">← All projects</a></div>
+  <div>
+    <p class="head-meta"><span class="kicker">Academic project</span></p>
+    <h1 class="title">Continuous-Time FX Volatility Modeling</h1>
+    <p class="abstract">An extended Ornstein-Uhlenbeck stochastic differential equation for ASEAN-5 exchange rates, with the <em>US 10-year yield</em> built in as an exogenous drift component — ranking each currency by how directly it responds to US monetary shocks.</p>
+    <ul class="tags" aria-label="Topics"><li>Ornstein–Uhlenbeck SDE</li><li>ASEAN-5</li><li>Bounded MLE</li></ul>
+  </div>
+</header>
+
+<figure class="model shell">
+  <div class="model-plot" data-plot="ou" data-seed="11" role="img" aria-label="Simulated mean-reverting paths. After a shock the mean moves up and the fan of paths follows it."></div>
+  <figcaption><b>Illustration</b>Simulated Ornstein–Uhlenbeck paths. Each path is pulled back toward a mean; when a US yield shock enters the drift, the mean itself moves and the whole fan follows.</figcaption>
+</figure>
+
+<section class="block shell split" id="glance">
+  <div class="margin"><h2 class="label">At a glance</h2></div>
+  <div>
+    <dl class="facts facts-top">
+      <div><dt>Method</dt><dd>Extended OU SDE, bounded MLE</dd></div>
+      <div><dt>Currencies</dt><dd>IDR · THB · SGD · MYR · PHP</dd></div>
+      <div><dt>Driver</dt><dd>US 10-year Treasury yield</dd></div>
+      <div><dt>Toolchain</dt><dd>Python</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="block shell split" id="results">
+  <div class="margin"><h2 class="label">Key results</h2></div>
+  <div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">IDR</div><div class="stat-label">Highest exposure to US monetary shocks: β = 0.019, σ = 0.047</div></div>
+        <div class="stat"><div class="stat-num">4×</div><div class="stat-label">IDR volatility relative to SGD (σ = 0.003), the least sensitive ASEAN-5 currency</div></div>
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">ASEAN currencies ranked by sensitivity to US 10-year yield moves</div></div>
+      </div>
+  </div>
+</section>
+
+<section class="block shell split" id="question">
+  <div class="margin"><h2 class="label">The question</h2></div>
+  <div>
+    <div class="prose">
+      <p>When US yields move, ASEAN currencies don’t all react the same way or at the same speed. This project builds a continuous-time model that separates each currency’s baseline mean-reverting dynamics from its specific sensitivity to US monetary policy, then ranks the five currencies on that sensitivity.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="method">
+  <div class="margin"><h2 class="label">Methodology</h2></div>
+  <div>
+    <div class="prose">
+      <p>The standard Ornstein-Uhlenbeck process — mean-reverting, continuous-time — is extended with the US 10-year Treasury yield entering the drift term as an exogenous driver. Parameters are estimated via bounded maximum likelihood across all five ASEAN-5 currencies (IDR, THB, SGD, MYR, PHP), with the bounds enforcing economically sensible mean-reversion speeds and volatility levels rather than letting the optimizer wander into degenerate regions.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="output">
+  <div class="margin"><h2 class="label">Model output</h2></div>
+  <div>
+    <figure class="plate">
+      <img src="figures/Sde%20fan%20chart.png" alt="Simulated Monte Carlo paths of the fitted OU-SDE for USD/IDR over a 60-day horizon, fanning out from the current spot rate" width="1440" height="720" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 1</span><span class="fig-title">Monte Carlo SDE paths, USD/IDR. </span>5,000 simulated paths of the fitted OU-SDE for USD/IDR over a 60-day horizon. The dashed line marks the current spot rate; the fan shows how quickly uncertainty compounds once the US yield shock enters the drift term.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="figures/Idr%20stress%20surface.png" alt="Stress surface mapping the USD/IDR exchange rate against shock velocity and shock duration" width="1400" height="800" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 2</span><span class="fig-title">Stress surface, IDR response. </span>The fitted USD/IDR rate as a joint function of shock velocity and duration, showing how the currency’s response compounds with both the size and the speed of the underlying US yield move.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="figures/Capital%20flight%20shock.png" alt="Line chart comparing expected depreciation of IDR, THB, SGD, MYR, and PHP under a 10 basis point US Fed shock" width="1200" height="600" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 3</span><span class="fig-title">Capital flight after a 10 bps Fed shock. </span>Expected cumulative depreciation for each ASEAN-5 currency following a 10 bps shock to the US 10-year yield, using each currency’s fitted β. IDR’s slope compounds fastest — roughly 1.5× steeper than THB and 2.5× steeper than MYR, SGD, and PHP by day 30.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="block shell split" id="findings">
+  <div class="margin"><h2 class="label">Findings</h2></div>
+  <div>
+    <div class="prose">
+      <p>The Indonesian rupiah shows the highest exposure to US monetary shocks of the five currencies (β = 0.019, σ = 0.047) — more than four times as volatile as the Singapore dollar (σ = 0.003), which sits at the other end of the ranking. That spread has direct implications for regional carry trade positioning and capital flow risk: IDR-denominated exposure carries meaningfully more US-driven risk than SGD-denominated exposure, even within the same regional bloc.</p>
+    </div>
+  </div>
+</section>
+
+<nav class="pager shell" aria-label="More projects">
+  <a class="prev" href="digital-trade.html"><span class="dir">← Previous</span><span class="t">Digital Trade and Geopolitical Regime Divergence</span></a>
+  <a class="next" href="export-volatility.html"><span class="dir">Next →</span><span class="t">Trade Policy Uncertainty and Export Volatility</span></a>
+</nav>
+</main>
+
+<footer class="site-footer shell">
+  <p>© 2026 Dayval Praski Hakim</p>
+  <p>Updated <span data-updated>September 2026</span></p>
+  <p class="colophon">Set in Literata and IBM Plex Mono. Map data from Natural Earth. The charts at the top of project pages illustrate each model and are not results.</p>
+</footer>
+</body>
+</html>

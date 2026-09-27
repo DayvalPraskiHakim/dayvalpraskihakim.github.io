@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trade Policy Uncertainty &amp; Export Volatility — D. P. Hakim</title>
+<meta name="description" content="VECM-GARCH analysis of how US trade policy uncertainty affects Indonesian export levels and volatility.">
+<meta name="author" content="Dayval Praski Hakim">
+<meta name="theme-color" content="#0d100f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Trade Policy Uncertainty &amp; Export Volatility — D. P. Hakim">
+<meta property="og:description" content="VECM-GARCH analysis of how US trade policy uncertainty affects Indonesian export levels and volatility.">
+<meta property="og:url" content="https://dayvalpraskihakim.github.io/export-volatility.html">
+<link rel="canonical" href="https://dayvalpraskihakim.github.io/export-volatility.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script defer src="site.js"></script>
+<script data-goatcounter="https://leq.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header shell">
+  <a class="wordmark" href="index.html">Dayval Praski Hakim</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<header class="paper-head shell split">
+  <div class="margin"><a class="back" href="index.html#projects">← All projects</a></div>
+  <div>
+    <p class="head-meta"><span class="kicker">Academic project</span></p>
+    <h1 class="title">Trade Policy Uncertainty and Export Volatility</h1>
+    <p class="abstract">A long-run and volatility-side look at how <em>US trade policy uncertainty</em> feeds into Indonesian exports — both the level effect on export volumes and the persistence of the volatility it creates.</p>
+    <ul class="tags" aria-label="Topics"><li>VECM-GARCH</li><li>Trade policy uncertainty</li><li>Indonesia</li></ul>
+  </div>
+</header>
+
+<figure class="model shell">
+  <div class="model-plot" data-plot="garch" data-seed="3" role="img" aria-label="A simulated return series: one large shock widens the volatility band, which then narrows slowly."></div>
+  <figcaption><b>Illustration</b>A simulated GARCH(1,1) series. One large uncertainty shock widens the volatility band, and with persistence near 0.94 the band narrows only slowly.</figcaption>
+</figure>
+
+<section class="block shell split" id="glance">
+  <div class="margin"><h2 class="label">At a glance</h2></div>
+  <div>
+    <dl class="facts facts-top">
+      <div><dt>Method</dt><dd>VECM-GARCH</dd></div>
+      <div><dt>Sample</dt><dd>128 monthly observations</dd></div>
+      <div><dt>Driver</dt><dd>US trade policy uncertainty</dd></div>
+      <div><dt>Toolchain</dt><dd>R</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="block shell split" id="results">
+  <div class="margin"><h2 class="label">Key results</h2></div>
+  <div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">β = −51.93</div><div class="stat-label">Long-run effect of a one-unit rise in US policy uncertainty on Indonesian exports</div><div class="stat-note">p &lt; 0.001</div></div>
+        <div class="stat"><div class="stat-num">1.68%</div><div class="stat-label">Monthly error-correction speed back toward the long-run equilibrium</div></div>
+        <div class="stat"><div class="stat-num">α+β = 0.94</div><div class="stat-label">Near-IGARCH volatility persistence in the export series itself</div></div>
+      </div>
+  </div>
+</section>
+
+<section class="block shell split" id="question">
+  <div class="margin"><h2 class="label">The question</h2></div>
+  <div>
+    <div class="prose">
+      <p>Policy uncertainty is usually treated as a level shock — it lowers trade, then trade recovers. This project asks two separate questions: how large is the long-run level effect on Indonesian exports, and does the uncertainty itself leave a lasting mark on export volatility, independent of the level effect.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="method">
+  <div class="margin"><h2 class="label">Methodology</h2></div>
+  <div>
+    <div class="prose">
+      <p>A Vector Error Correction Model captures the long-run cointegrating relationship between US trade policy uncertainty (USPUC), the real effective exchange rate (REER), inflation, and Indonesian export volumes across 128 monthly observations, with a GARCH(1,1) specification layered on each series’ residuals to characterize volatility persistence separately from the level relationship. Impulse response functions trace how long a given uncertainty shock takes to work through the system.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="findings">
+  <div class="margin"><h2 class="label">Findings</h2></div>
+  <div>
+    <div class="prose">
+      <p>A one-unit rise in US policy uncertainty reduces Indonesian exports by roughly 52 units in the long run, with the effect persisting through 8 or more periods according to the impulse response analysis. Of the four variables in the system, only exports themselves adjust significantly back toward that long-run relationship when a deviation occurs (α = −0.0168, p &lt; 0.001) — USPUC, REER, and inflation are all statistically weakly exogenous in this system, meaning exports do the equilibrating, not the other way around. The correction is slow either way: about 1.68% of a deviation closes per month.</p>
+      <p>Volatility persistence isn’t uniform across the system. Export volatility itself sits close to the IGARCH (unit-root) boundary (α+β ≈ 0.94), as does inflation (≈ 0.94) — both consistent with a “sticky” risk regime that doesn’t quickly normalize after a shock. REER volatility, by contrast, shows almost no persistence at all (α+β ≈ 0.06, with neither parameter individually significant) — exchange-rate volatility in this system behaves close to white noise, a genuinely different dynamic from the export and inflation series.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="adjustment">
+  <div class="margin"><h2 class="label">Adjustment dynamics</h2></div>
+  <div>
+    <div class="prose"><p>Error-correction (α) coefficients from the VECM — how strongly each variable responds to a deviation from the long-run cointegrating relationship. A larger, more significant magnitude means that variable does more of the work restoring equilibrium.</p></div>
+    <figure class="table-fig">
+<figcaption class="table-cap">Error-correction (α) coefficients</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead><tr><th scope="col">Equation</th><th scope="col"><var>α</var> (ec1)</th><th scope="col">Std err</th><th scope="col">z</th><th scope="col">p</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">EXP</th><td class="strong">−0.0168</td><td>0.004</td><td>−4.399</td><td class="sig">&lt; 0.001</td></tr>
+          <tr><th scope="row">USPUC</th><td>−0.0012</td><td>0.001</td><td>−1.494</td><td class="dim">0.135</td></tr>
+          <tr><th scope="row">REER</th><td>−4.76e-05</td><td>3.23e-05</td><td>−1.477</td><td class="dim">0.140</td></tr>
+          <tr><th scope="row">Inflation</th><td>−2.02e-07</td><td>1.06e-07</td><td>−1.910</td><td class="dim">0.056</td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+    <figure class="table-fig">
+<figcaption class="table-cap">Cointegrating vector, normalized on exports</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead><tr><th scope="col">Variable</th><th scope="col"><var>β</var></th><th scope="col">Std err</th><th scope="col">z</th><th scope="col">p</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">EXP (normalized)</th><td class="strong">1.0000</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+          <tr><th scope="row">USPUC</th><td>51.93</td><td>15.33</td><td>3.387</td><td class="sig">0.001</td></tr>
+          <tr><th scope="row">REER</th><td>734.66</td><td>315.56</td><td>2.328</td><td class="sig">0.020</td></tr>
+          <tr><th scope="row">Inflation</th><td>3.094e+05</td><td>6.10e+04</td><td>5.071</td><td class="sig">&lt; 0.001</td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+  </div>
+</section>
+
+<section class="block shell split" id="persistence">
+  <div class="margin"><h2 class="label">Volatility persistence</h2></div>
+  <div>
+    <div class="prose"><p>Univariate GARCH(1,1) fit separately on each series. α+β close to 1 means shocks to that series’ volatility decay very slowly (an IGARCH-like “sticky” regime); close to 0 means volatility reverts quickly.</p></div>
+    <figure class="table-fig">
+<figcaption class="table-cap">Univariate GARCH(1,1) by series</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead><tr><th scope="col">Series</th><th scope="col"><var>ω</var></th><th scope="col"><var>α</var><sub>1</sub></th><th scope="col"><var>β</var><sub>1</sub></th><th scope="col"><var>α</var> + <var>β</var></th></tr></thead>
+        <tbody>
+          <tr><th scope="row">EXP</th><td>0.065 <span class="dim">ns</span></td><td>0.114 <span class="dim">ns</span></td><td class="strong">0.824<span class="sig"> ***</span></td><td class="sig">0.938</td></tr>
+          <tr><th scope="row">USPUC</th><td class="strong">0.152<span class="sig"> **</span></td><td>0.067 <span class="dim">ns</span></td><td class="strong">0.785<span class="sig"> ***</span></td><td>0.852</td></tr>
+          <tr><th scope="row">REER</th><td class="strong">0.936<span class="sig"> *</span></td><td>0.019 <span class="dim">ns</span></td><td>0.044 <span class="dim">ns</span></td><td class="dim">0.063</td></tr>
+          <tr><th scope="row">Inflation</th><td>0.032 <span class="dim">ns</span></td><td>0.106 <span class="dim">ns</span></td><td class="strong">0.833<span class="sig"> ***</span></td><td class="sig">0.939</td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+    <p class="table-note">*** p&lt;0.001  ** p&lt;0.01  * p&lt;0.05  ns = not significant at 5%</p>
+  </div>
+</section>
+
+<section class="block shell split" id="irf">
+  <div class="margin"><h2 class="label">Impulse responses</h2></div>
+  <div>
+    <div class="prose"><p>Full orthogonalized IRF grid across all four series, 10-period horizon, dashed lines are 95% bounds. The USPUC→EXP panel (top row, second column) is the headline result: a policy-uncertainty shock produces a negative, slow-decaying response in exports that hasn’t fully died out by period 10.</p></div>
+    <figure class="plate narrow">
+      <img src="figures/IRF_Uncer.png" alt="Impulse response function grid: EXP, USPUC, REER, and Inflation shocks and responses across a 10-period horizon" width="393" height="390" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 1</span><span class="fig-title">Impulse responses. </span>Orthogonalized IRFs across all four series over a 10-period horizon; dashed lines are 95% bounds.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<nav class="pager shell" aria-label="More projects">
+  <a class="prev" href="fx-volatility.html"><span class="dir">← Previous</span><span class="t">Continuous-Time FX Volatility Modeling</span></a>
+  <a class="next" href="geo-contagion.html"><span class="dir">Next →</span><span class="t">Credit Risk and Firm Fundamentals</span></a>
+</nav>
+</main>
+
+<footer class="site-footer shell">
+  <p>© 2026 Dayval Praski Hakim</p>
+  <p>Updated <span data-updated>September 2026</span></p>
+  <p class="colophon">Set in Literata and IBM Plex Mono. Map data from Natural Earth. The charts at the top of project pages illustrate each model and are not results.</p>
+</footer>
+</body>
+</html>

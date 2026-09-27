@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geopolitical Risk Transmission &amp; Capital Flight — D. P. Hakim</title>
+<meta name="description" content="A self-exciting Hawkes process framework for geopolitical risk transmission and capital flight in EMDE currencies.">
+<meta name="author" content="Dayval Praski Hakim">
+<meta name="theme-color" content="#0d100f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Geopolitical Risk Transmission &amp; Capital Flight — D. P. Hakim">
+<meta property="og:description" content="A self-exciting Hawkes process framework for geopolitical risk transmission and capital flight in EMDE currencies.">
+<meta property="og:url" content="https://dayvalpraskihakim.github.io/main-project-a.html">
+<link rel="canonical" href="https://dayvalpraskihakim.github.io/main-project-a.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script defer src="site.js"></script>
+<script data-goatcounter="https://leq.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header shell">
+  <a class="wordmark" href="index.html">Dayval Praski Hakim</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<header class="paper-head shell split">
+  <div class="margin"><a class="back" href="index.html#projects">← All projects</a></div>
+  <div>
+    <p class="head-meta"><span class="kicker">Working paper</span><span class="status" data-s="preprint">SSRN preprint</span></p>
+    <h1 class="title">Geopolitical Risk Transmission and Capital Flight in EMDE Currencies: A Hawkes Process Approach</h1>
+    <p class="abstract">A self-exciting jump-diffusion framework for how geopolitical shocks trigger cascading capital flight across emerging-market and developing-economy currencies. The central result is a <em>bifurcation</em>: past a critical excitation threshold, contagion stops behaving like a one-off jump and starts behaving like a self-sustaining chain of events, one shock quietly setting off the next.</p>
+    <ul class="tags" aria-label="Topics"><li>Hawkes processes</li><li>EMDE FX</li><li>Contagion</li><li>Bounded MLE</li></ul>
+  </div>
+</header>
+
+<figure class="model shell">
+  <div class="model-plot" data-plot="hawkes3" data-seed="12" role="img" aria-label="Three simulated currency lanes. A burst of shocks in the first lane is followed by bursts in the other two."></div>
+  <figcaption><b>Illustration</b>A simulated three-currency Hawkes process with cross-excitation. A burst of shocks in one currency lifts the intensity in the other two for a while: the kind of spillover the paper studies.</figcaption>
+</figure>
+
+<section class="block shell split" id="glance">
+  <div class="margin"><h2 class="label">At a glance</h2></div>
+  <div>
+    <dl class="facts facts-top">
+      <div><dt>Status</dt><dd><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7476298" target="_blank" rel="noopener">SSRN preprint</a></dd></div>
+      <div><dt>Target</dt><dd>Q1 journal submission</dd></div>
+      <div><dt>Method</dt><dd>Hawkes process, bounded MLE</dd></div>
+      <div><dt>Toolchain</dt><dd>Python</dd></div>
+    </dl>
+    <p class="prose glance-note">The working paper is now available as a <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7476298" target="_blank" rel="noopener">preprint on SSRN</a>. Final revisions are underway for journal submission.</p>
+  </div>
+</section>
+
+<section class="block shell split" id="findings">
+  <div class="margin"><h2 class="label">Key findings</h2></div>
+  <div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">CLP</div><div class="stat-label">Leading liquid proxy currency, replacing MXN after correction</div></div>
+        <div class="stat"><div class="stat-num">↑</div><div class="stat-label">Wald statistic on the core bifurcation result, substantially strengthened post-correction</div></div>
+        <div class="stat"><div class="stat-num">ZAR / IDR</div><div class="stat-label">Lost individual significance under the corrected, stationarity-enforced specification</div></div>
+      </div>
+  </div>
+</section>
+
+<section class="block shell split" id="question">
+  <div class="margin"><h2 class="label">The question</h2></div>
+  <div>
+    <div class="prose">
+      <p>Capital flight from emerging markets is usually modeled as a reaction to a single shock. That misses something important: geopolitical stress tends to arrive in clusters, and each event changes the probability of the next one. This paper treats currency crashes as a self-exciting point process, where a jump doesn’t just move the exchange rate — it temporarily raises the intensity of future jumps.</p>
+      <p>The goal is to identify when that self-excitation crosses a threshold and contagion becomes self-sustaining, independent of any further external shock — a structural bifurcation point rather than a matter of degree.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="method">
+  <div class="margin"><h2 class="label">Methodology</h2></div>
+  <div>
+    <div class="prose">
+      <p>Currency crash classification is disentangled from tail direction and scrubbed for FOMC and NFP announcement windows to isolate geopolitical from monetary-policy-driven jumps — orthogonalizing the process along what the paper refers to internally as Path B. The excitation parameter is reparametrized and bounded to guarantee stationarity of the fitted process, rather than checking stationarity post hoc.</p>
+      <ul>
+        <li>Self-exciting Hawkes process fit via bounded maximum likelihood, with the self-excitation parameter constrained to enforce stationarity by construction</li>
+        <li>Crash classification separated from tail direction to avoid conflating one- and two-tailed events</li>
+        <li>FOMC and NFP announcement windows scrubbed to isolate geopolitical from monetary-policy shocks</li>
+        <li>Five robustness tables recomputed under the corrected specification</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<nav class="pager shell" aria-label="More projects">
+  <a class="prev" href="index.html#projects"><span class="dir">← Back</span><span class="t">All research and projects</span></a>
+  <a class="next" href="digital-trade.html"><span class="dir">Next →</span><span class="t">Digital Trade and Geopolitical Regime Divergence</span></a>
+</nav>
+</main>
+
+<footer class="site-footer shell">
+  <p>© 2026 Dayval Praski Hakim</p>
+  <p>Updated <span data-updated>September 2026</span></p>
+  <p class="colophon">Set in Literata and IBM Plex Mono. Map data from Natural Earth. The charts at the top of project pages illustrate each model and are not results.</p>
+</footer>
+</body>
+</html>

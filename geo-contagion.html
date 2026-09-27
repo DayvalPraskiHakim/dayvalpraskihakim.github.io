@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credit Risk &amp; Distance-to-Default — D. P. Hakim</title>
+<meta name="description" content="A Bharath-Shumway Distance-to-Default model for IDX-listed firms, benchmarked against gradient boosting, testing whether leverage and profitability explain credit risk beyond the structural model itself.">
+<meta name="author" content="Dayval Praski Hakim">
+<meta name="theme-color" content="#0d100f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Credit Risk &amp; Distance-to-Default — D. P. Hakim">
+<meta property="og:description" content="A Bharath-Shumway Distance-to-Default model for IDX-listed firms, benchmarked against gradient boosting, testing whether leverage and profitability explain credit risk beyond the structural model itself.">
+<meta property="og:url" content="https://dayvalpraskihakim.github.io/geo-contagion.html">
+<link rel="canonical" href="https://dayvalpraskihakim.github.io/geo-contagion.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script defer src="site.js"></script>
+<script data-goatcounter="https://leq.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header shell">
+  <a class="wordmark" href="index.html">Dayval Praski Hakim</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<header class="paper-head shell split">
+  <div class="margin"><a class="back" href="index.html#projects">← All projects</a></div>
+  <div>
+    <p class="head-meta"><span class="kicker">Academic project</span><span class="status" data-s="ongoing">Ongoing</span></p>
+    <h1 class="title">Credit Risk and Firm Fundamentals: A Distance-to-Default Approach</h1>
+    <p class="abstract">A Bharath-Shumway Distance-to-Default model for non-financial IDX-listed firms, benchmarked against a gradient-boosted machine learning model — testing whether firm leverage and profitability explain credit risk beyond what’s already mechanically built into the structural model itself.</p>
+    <ul class="tags" aria-label="Topics"><li>Distance-to-default</li><li>Credit risk</li><li>Gradient boosting</li></ul>
+  </div>
+</header>
+
+<figure class="model shell">
+  <div class="model-plot" data-plot="merton" data-seed="8" role="img" aria-label="Simulated asset-value paths above a debt barrier, with the distribution of asset value in one year and its default tail."></div>
+  <figcaption><b>Illustration</b>The Merton picture behind distance to default. Simulated paths of a firm’s asset value drift above a barrier set by its debt; distance to default counts how many standard deviations separate expected asset value from that barrier.</figcaption>
+</figure>
+
+<section class="block shell split" id="glance">
+  <div class="margin"><h2 class="label">At a glance</h2></div>
+  <div>
+    <dl class="facts facts-top">
+      <div><dt>Status</dt><dd>Ongoing</dd></div>
+      <div><dt>Method</dt><dd>Distance-to-default, panel OLS, gradient boosting</dd></div>
+      <div><dt>Application</dt><dd>Corporate credit risk, IDX-listed firms</dd></div>
+      <div><dt>Toolchain</dt><dd>Python</dd></div>
+    </dl>
+    <p class="prose glance-note">Empirical results finalized (baseline model, robustness checks, ML benchmark); written analysis in progress.</p>
+  </div>
+</section>
+
+<section class="block shell split" id="results">
+  <div class="margin"><h2 class="label">Key results</h2></div>
+  <div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">33 firms</div><div class="stat-label">Non-financial IDX-listed firms across eight sectors, 2022–2025 (132 firm-years)</div></div>
+        <div class="stat"><div class="stat-num">−3.97</div><div class="stat-label">Leverage coefficient on DD in Model B (p &lt; 0.01), correctly signed in every specification</div></div>
+        <div class="stat"><div class="stat-num">1.71 vs 1.73</div><div class="stat-label">Out-of-sample RMSE, LightGBM against the linear baseline: essentially a tie</div></div>
+      </div>
+  </div>
+</section>
+
+<section class="block shell split" id="question">
+  <div class="margin"><h2 class="label">The question</h2></div>
+  <div>
+    <div class="prose">
+      <p>The Merton/Bharath-Shumway Distance-to-Default framework prices credit risk directly from equity markets — market value, volatility, and leverage — without needing a firm’s own default history. But leverage is also mechanically embedded in the DD calculation itself, which raises an obvious question: once you control for that, does anything about a firm’s actual fundamentals — its profitability, its size — still explain variation in credit risk? Or is the structural model just restating its own inputs?</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="data">
+  <div class="margin"><h2 class="label">Data &amp; sample</h2></div>
+  <div>
+    <div class="prose">
+      <p>33 non-financial firms listed on the Indonesia Stock Exchange, spanning eight sectors, 2022–2025 (132 firm-years). Banks are excluded on structural grounds — a bank’s leverage ratio reflects deposit-taking, not distress, so applying Merton/Bharath-Shumway to financial institutions produces misleadingly low apparent default risk. Price and financial statement data is sourced via Yahoo Finance and assembled into a firm-year panel.</p>
+      <p>One data issue surfaced and corrected during the build: five major commodity exporters (ITMG, INCO, PGAS, ADRO, MEDC) report financial statements in USD while trading in IDR. Left uncorrected, this currency mismatch inflates DD for exactly these firms by roughly the USD/IDR exchange rate — and, before the fix, produced what looked like a genuine “commodity supercycle” signal in the Energy &amp; Mining sector. Confirmed directly via each firm’s reporting-currency metadata and corrected using the historical exchange rate matched to each fiscal year-end, not a single current rate.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="method">
+  <div class="margin"><h2 class="label">Methodology</h2></div>
+  <div>
+    <div class="prose">
+      <p>Distance-to-Default is computed via the Bharath-Shumway naive approximation to Merton’s model, using market equity, a debt-volatility proxy, and each firm’s face value of debt. The baseline regression explains DD using leverage, profitability (ROA), and firm size (log assets), with year fixed effects for common macro shocks and firm-clustered standard errors. A second specification adds sector fixed effects, since sector-level shocks (real ones — a genuine commodity cycle, not the currency artifact above) can otherwise masquerade as individual-firm outliers. A gradient-boosted model (LightGBM), evaluated via firm-grouped cross-validation to prevent a firm’s own history leaking across folds, benchmarks whether a flexible model captures anything the linear specification misses.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="findings">
+  <div class="margin"><h2 class="label">Key findings</h2></div>
+  <div>
+    <div class="prose"><p>Leverage and profitability both explain DD robustly and correctly-signed across every specification tested — with and without sector controls, with and without outlier exclusion. Firm size does not: an initial regression showed a significant, counterintuitive negative coefficient on firm size, which fully disappeared once the currency mismatch above was corrected. That coefficient was the data error, not a real pattern — a useful reminder that a statistically significant result is not the same as a real one.</p></div>
+    <figure class="plate">
+      <img src="figures/fig1_sector_dd.png" alt="Average distance-to-default by sector" width="1200" height="750" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 1</span><span class="fig-title">Average DD by sector, post-correction. </span>No sector sits as a dramatic outlier — the apparent Energy &amp; Mining “supercycle” in earlier drafts was the currency artifact, not a real effect.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="figures/fig4_leverage_vs_dd.png" alt="Leverage versus distance-to-default scatter, colored by sector" width="1200" height="900" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 2</span><span class="fig-title">Leverage against DD. </span>Leverage against DD across the full panel — the core relationship the regression formalizes.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="figures/fig3_feature_importance.png" alt="LightGBM feature importance chart" width="1200" height="600" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 3</span><span class="fig-title">Gradient-boosted feature importance. </span>Profitability and leverage dominate, consistent with the linear model.</figcaption>
+    </figure>
+    <div class="prose"><p>Out-of-sample, LightGBM essentially ties the linear baseline (RMSE 1.71 vs. 1.73) rather than beating it outright — a modest but real difference from an earlier draft where an uncorrected data issue was inflating the apparent gap between the two models. Read plainly: once the data is clean, a flexible model finds little beyond what a well-specified structural model already captures. That is itself the finding, not a null result to explain away.</p></div>
+    <figure class="plate">
+      <img src="figures/fig2_dd_distribution.png" alt="Distance-to-default distribution, full sample versus outliers excluded" width="1200" height="750" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 4</span><span class="fig-title">DD distribution. </span>Before and after excluding influential observations — now a tight, plausible range rather than a long tail driven by a handful of firms.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="block shell split" id="tables">
+  <div class="margin"><h2 class="label">Full results</h2></div>
+  <div>
+    <figure class="table-fig">
+<figcaption class="table-cap">Table 1. Summary statistics (n = 132 firm-years)</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead><tr><th scope="col">Variable</th><th scope="col">N</th><th scope="col">Mean</th><th scope="col">Std dev</th><th scope="col">Min</th><th scope="col">Max</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Distance to Default</th><td>132</td><td>3.681</td><td>2.445</td><td>−2.245</td><td>11.475</td></tr>
+          <tr><th scope="row">Leverage Ratio</th><td>132</td><td>0.485</td><td>0.187</td><td>0.114</td><td>0.966</td></tr>
+          <tr><th scope="row">Profitability (ROA)</th><td>132</td><td>0.071</td><td>0.078</td><td>−0.194</td><td>0.455</td></tr>
+          <tr><th scope="row">Log(Total Assets)</th><td>132</td><td>31.611</td><td>0.948</td><td>28.726</td><td>33.860</td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+    <figure class="table-fig">
+<figcaption class="table-cap">Table 2. Baseline regression: DD ~ leverage + profitability + log(assets) + year FE. Model A: full sample. Model B: influential observations excluded (Cook’s distance &gt; 4/n). Firm-clustered standard errors.</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead><tr><th scope="col">Variable</th><th scope="col">Model A<br>coef</th><th scope="col">Model A<br>p</th><th scope="col">Model B<br>coef</th><th scope="col">Model B<br>p</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Leverage Ratio</th><td class="strong">−4.281</td><td class="sig">0.001***</td><td class="strong">−3.970</td><td class="sig">0.000***</td></tr>
+          <tr><th scope="row">Profitability (ROA)</th><td class="strong">13.039</td><td class="sig">0.000***</td><td class="strong">17.383</td><td class="sig">0.000***</td></tr>
+          <tr><th scope="row">Log(Total Assets)</th><td>−0.169</td><td class="dim">0.440</td><td>−0.125</td><td class="dim">0.483</td></tr>
+          <tr><th scope="row">N</th><td>132</td><td></td><td>123</td><td></td></tr>
+          <tr><th scope="row">R-squared</th><td>0.384</td><td></td><td>0.452</td><td></td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+    <p class="table-note">*** p&lt;0.01  ** p&lt;0.05  * p&lt;0.10</p>
+    <figure class="table-fig">
+<figcaption class="table-cap">Table 3. Out-of-sample comparison, 5-fold cross-validation grouped by firm</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead><tr><th scope="col">Model</th><th scope="col">Out-of-sample RMSE</th><th scope="col">Out-of-sample R²</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">OLS (Model B spec)</th><td>1.733</td><td>0.400</td></tr>
+          <tr><th scope="row">LightGBM</th><td class="strong">1.707</td><td class="strong">0.419</td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+  </div>
+</section>
+
+<nav class="pager shell" aria-label="More projects">
+  <a class="prev" href="export-volatility.html"><span class="dir">← Previous</span><span class="t">Trade Policy Uncertainty and Export Volatility</span></a>
+  <a class="next" href="main-project-c.html"><span class="dir">Next →</span><span class="t">Tail Risk in Energy Commodities</span></a>
+</nav>
+</main>
+
+<footer class="site-footer shell">
+  <p>© 2026 Dayval Praski Hakim</p>
+  <p>Updated <span data-updated>September 2026</span></p>
+  <p class="colophon">Set in Literata and IBM Plex Mono. Map data from Natural Earth. The charts at the top of project pages illustrate each model and are not results.</p>
+</footer>
+</body>
+</html>

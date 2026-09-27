@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tail Risk in Energy Commodities — D. P. Hakim</title>
+<meta name="description" content="Score-driven GAS/GPD models for energy commodity tail risk, using NASA satellite covariates.">
+<meta name="author" content="Dayval Praski Hakim">
+<meta name="theme-color" content="#0d100f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tail Risk in Energy Commodities — D. P. Hakim">
+<meta property="og:description" content="Score-driven GAS/GPD models for energy commodity tail risk, using NASA satellite covariates.">
+<meta property="og:url" content="https://dayvalpraskihakim.github.io/main-project-c.html">
+<link rel="canonical" href="https://dayvalpraskihakim.github.io/main-project-c.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script defer src="site.js"></script>
+<script data-goatcounter="https://leq.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header shell">
+  <a class="wordmark" href="index.html">Dayval Praski Hakim</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<header class="paper-head shell split">
+  <div class="margin"><a class="back" href="index.html#projects">← All projects</a></div>
+  <div>
+    <p class="head-meta"><span class="kicker">Academic project</span><span class="status" data-s="null">Null result</span></p>
+    <h1 class="title">Tail Risk in Energy Commodities: A Score-Driven Approach with Satellite Covariates</h1>
+    <p class="abstract">A score-driven GAS/GPD framework for tail risk in WTI crude, RBOB gasoline, and Henry Hub natural gas futures — with the twist that the time-varying parameters are pushed not just by returns, but by <em>physical</em> covariates: NASA storm-track data and satellite temperature reanalysis.</p>
+    <ul class="tags" aria-label="Topics"><li>GAS / DCS models</li><li>Energy futures</li><li>Satellite data</li></ul>
+  </div>
+</header>
+
+<figure class="model shell">
+  <div class="model-plot" data-plot="pot" data-seed="21" role="img" aria-label="Simulated daily returns with the worst five percent of days marked, above a simulated storm-exposure index."></div>
+  <figcaption><b>Illustration</b>Simulated daily returns with the worst 5% of days marked (peaks over a threshold), above a simulated storm-exposure index. The project asks whether exposure like this moves the tail; it found no effect that survives testing.</figcaption>
+</figure>
+
+<section class="block shell split" id="glance">
+  <div class="margin"><h2 class="label">At a glance</h2></div>
+  <div>
+    <dl class="facts facts-top">
+      <div><dt>Status</dt><dd>Completed, null result</dd></div>
+      <div><dt>Instruments</dt><dd>WTI / RBOB / Henry Hub</dd></div>
+      <div><dt>Framework</dt><dd>GAS/DCS + GPD</dd></div>
+      <div><dt>Toolchain</dt><dd>Python</dd></div>
+    </dl>
+    <p class="prose glance-note">Full pipeline estimated end to end across all three instruments. No storm-exposure effect survives cross-threshold checks, seasonal controls, and placebo inference; it is currently being written up as a null result.</p>
+  </div>
+</section>
+
+<section class="block shell split" id="question">
+  <div class="margin"><h2 class="label">The question</h2></div>
+  <div>
+    <div class="prose">
+      <p>Standard GARCH-family models let volatility respond to its own past, but energy markets have an unusually direct physical channel into risk: a hurricane shutting down Gulf refining capacity, or a cold snap spiking heating demand, moves the tails of the return distribution in ways that are visible in weather data before they’re visible in price data. The question is how much of energy futures’ tail risk can be explained by those physical shocks directly.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="method">
+  <div class="margin"><h2 class="label">Methodology</h2></div>
+  <div>
+    <div class="prose">
+      <p>The core engine is a score-driven time-varying parameter (GAS/DCS) model in the sense of Creal, Koopman, and Lucas (2013), paired with a Generalized Pareto tail specification following Massacci’s (2017, <em>Management Science</em>) approach to dynamic tail risk. Score-driven models were chosen to diversify the methodological toolkit across the broader research agenda.</p>
+      <ul>
+        <li>Score-driven GAS/DCS dynamics for the time-varying tail and volatility parameters</li>
+        <li>Generalized Pareto Distribution (GPD) tail modeling, following Massacci (2017)</li>
+        <li>NASA EONET/HURDAT2 storm-track data as an exogenous physical-exposure covariate</li>
+        <li>NASA POWER satellite temperature reanalysis as a demand-side covariate, with separate handling for heating- and cooling-driven anomalies</li>
+        <li>Applied separately to both the occurrence (exceedance frequency) and severity (exceedance magnitude) channels of the tail process, across WTI crude, RBOB gasoline, and Henry Hub natural gas futures</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="why">
+  <div class="margin"><h2 class="label">Why satellite data</h2></div>
+  <div>
+    <div class="prose">
+      <p>Storm and temperature data give the model a covariate that moves ahead of price in a way that’s physically interpretable rather than statistically inferred — a hurricane’s track is known before it fully prices into RBOB futures, and a cold anomaly is known before it fully prices into Henry Hub. That timing gap is the mechanism this paper set out to quantify.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="found">
+  <div class="margin"><h2 class="label">What I found</h2></div>
+  <div>
+    <div class="prose"><p>None of it holds up. The storm-exposure covariate was run through cross-threshold construction checks, explicit seasonal-cycle controls, and permutation/circular-shift placebo inference, across both the occurrence and severity channels and all three instruments. Every result that looked significant on a first pass — including one that initially cleared conventional significance thresholds — collapsed once tested against a randomized null or an explicit hurricane-season control.</p></div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">54</div><div class="stat-label">Model specifications fitted</div></div>
+        <div class="stat"><div class="stat-num">2,800</div><div class="stat-label">Placebo draws run</div></div>
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Effects surviving the full gauntlet</div><div class="stat-note">not for lack of trying</div></div>
+      </div>
+    <div class="prose after-stats"><p>The leading interpretation: Gulf Coast storms don’t arrive as surprises. NHC advisories and forecast cones give markets days of lead time before a storm’s physical footprint — the thing this covariate measures — actually peaks. By the time exposure is high, the disruption risk is very plausibly already priced in. That reframes the null from “no effect” to “no effect left to find, because the market got there first” — a testable claim in its own right, not just an absence of one.</p></div>
+  </div>
+</section>
+
+<section class="block shell split" id="gauntlet">
+  <div class="margin"><h2 class="label">The robustness gauntlet</h2></div>
+  <div>
+    <dl class="rows">
+      <div><dt>Cross-threshold</dt><dd>Naive / frozen / fixed percentile thresholds compared for every commodity × channel. Sign flips under frozen_95 for both gasoline and natgas occurrence — traced to the threshold’s own calibration using the storm covariate, not a real effect.</dd></div>
+      <div><dt>Seasonal control</dt><dd>Adding an explicit annual-cycle term collapses natgas occurrence’s apparent effect (p = .003 → .57) and, in the opposite direction, strengthens gasoline severity’s (p = .081 → .032) — evidence the natgas result was seasonality and not storms.</dd></div>
+      <div><dt>Placebo inference</dt><dd>2,800 permutation and circular-shift draws across both surviving candidates. Neither clears conventional significance under either method — best case p = .063 (natgas, circular shift).</dd></div>
+      <div><dt>Exposure sensitivity</dt><dd>Re-estimated gasoline severity across a 3×3 grid of exposure radius (100–250 km) and decay half-life (5–20 d). No configuration produces a result that would be expected to survive placebo testing — same fragile pattern throughout.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="block shell split" id="figures">
+  <div class="margin"><h2 class="label">Figures</h2></div>
+  <div>
+    <figure class="plate">
+      <img src="figures/placebo_grid.png" alt="Placebo test: real gamma_storm estimate against permutation and circular-shift null distributions for natgas occurrence and gasoline severity" width="1874" height="1343" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 1</span><span class="fig-title">Placebo inference. </span>γ_storm’s real estimate (red line) against 300 randomized draws per method, for the two candidates that survived to the placebo stage. Random permutation destroys the exposure series’ seasonal shape entirely; circular shift preserves it and only scrambles which dates it lines up with — the gap between the two columns is itself diagnostic.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="figures/seasonal_comparison.png" alt="Slope chart showing gamma_storm p-values before and after adding a seasonal control term" width="1578" height="899" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 2</span><span class="fig-title">Adding a seasonal control. </span>Adding an explicit seasonal-cycle term to the model pulls the two candidate effects in opposite directions — natgas occurrence collapses, gasoline severity strengthens — which is the split that motivated placebo-testing both rather than trusting either on the seasonally-controlled p-value alone.</figcaption>
+    </figure>
+    <figure class="plate">
+      <img src="figures/radius_heatmap.png" alt="Heatmap of gasoline severity gamma_storm p-value across exposure radius and decay half-life combinations" width="1121" height="817" loading="lazy" decoding="async">
+      <figcaption><span class="fig-no">Figure 3</span><span class="fig-title">Exposure sensitivity. </span>Gasoline severity’s p-value across a grid of exposure-construction choices (radius, decay half-life). The smooth gradient, with no isolated sweet spot, is itself evidence against a real, well-localized effect hiding at some untried parameter setting.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="block shell split" id="status">
+  <div class="margin"><h2 class="label">Status</h2></div>
+  <div>
+    <div class="prose">
+      <p>The data pipeline and estimation — futures returns, storm-exposure indices, and temperature-anomaly series across all three instruments — are complete, with a null result.</p>
+    </div>
+  </div>
+</section>
+
+<nav class="pager shell" aria-label="More projects">
+  <a class="prev" href="geo-contagion.html"><span class="dir">← Previous</span><span class="t">Credit Risk and Firm Fundamentals</span></a>
+  <a class="next" href="index.html#projects"><span class="dir">Back →</span><span class="t">All research and projects</span></a>
+</nav>
+</main>
+
+<footer class="site-footer shell">
+  <p>© 2026 Dayval Praski Hakim</p>
+  <p>Updated <span data-updated>September 2026</span></p>
+  <p class="colophon">Set in Literata and IBM Plex Mono. Map data from Natural Earth. The charts at the top of project pages illustrate each model and are not results.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Trade &amp; Geopolitical Regime Divergence — D. P. Hakim</title>
+<meta name="description" content="PPMLHDFE gravity estimation on how digital regulatory divergence and data localization affect bilateral trade flows.">
+<meta name="author" content="Dayval Praski Hakim">
+<meta name="theme-color" content="#0d100f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Digital Trade &amp; Geopolitical Regime Divergence — D. P. Hakim">
+<meta property="og:description" content="PPMLHDFE gravity estimation on how digital regulatory divergence and data localization affect bilateral trade flows.">
+<meta property="og:url" content="https://dayvalpraskihakim.github.io/digital-trade.html">
+<link rel="canonical" href="https://dayvalpraskihakim.github.io/digital-trade.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script defer src="site.js"></script>
+<script data-goatcounter="https://leq.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header shell">
+  <a class="wordmark" href="index.html">Dayval Praski Hakim</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+<header class="paper-head shell split">
+  <div class="margin"><a class="back" href="index.html#projects">← All projects</a></div>
+  <div>
+    <p class="head-meta"><span class="kicker">Academic project</span></p>
+    <h1 class="title">Digital Trade and Geopolitical Regime Divergence</h1>
+    <p class="abstract">A gravity-model test of whether <em>digital regulatory divergence</em> — specifically, government-imposed data localization — acts as a structural barrier to bilateral trade, independent of the usual gravity factors like distance, size, and shared borders.</p>
+    <ul class="tags" aria-label="Topics"><li>PPMLHDFE</li><li>Bilateral trade</li><li>Data governance</li></ul>
+  </div>
+</header>
+
+<figure class="model shell">
+  <div class="model-plot" data-plot="gravity" data-seed="5" role="img" aria-label="Simulated country pairs: log trade falls with log distance, and pairs with divergent regimes sit below the fitted line."></div>
+  <figcaption><b>Illustration</b>Simulated country pairs. In a gravity model, trade falls with distance. The question is whether pairs with divergent digital and market regimes (rust) sit systematically below the line once everything else is controlled for.</figcaption>
+</figure>
+
+<section class="block shell split" id="glance">
+  <div class="margin"><h2 class="label">At a glance</h2></div>
+  <div>
+    <dl class="facts facts-top">
+      <div><dt>Method</dt><dd>PPMLHDFE</dd></div>
+      <div><dt>Sample</dt><dd>6,960 bilateral pairs</dd></div>
+      <div><dt>Fixed effects</dt><dd>Exporter-year, importer-year, pair</dd></div>
+      <div><dt>Toolchain</dt><dd>R</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="block shell split" id="results">
+  <div class="margin"><h2 class="label">Key results</h2></div>
+  <div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">β = −0.34</div><div class="stat-label">Effect of market-regime divergence (US-style open market vs. China-style state-directed market) on bilateral trade flows</div><div class="stat-note">p = 0.016 (Model 2 only, see caveats below)</div></div>
+        <div class="stat"><div class="stat-num">0.98</div><div class="stat-label">Pseudo R², robust to pair fixed effects</div></div>
+        <div class="stat"><div class="stat-num">6,960</div><div class="stat-label">Bilateral trade observations in the estimation sample</div></div>
+      </div>
+  </div>
+</section>
+
+<section class="block shell split" id="question">
+  <div class="margin"><h2 class="label">The question</h2></div>
+  <div>
+    <div class="prose">
+      <p>Gravity models explain most of bilateral trade with distance, GDP, and shared history. This project asks what’s left over once those are controlled for — testing several distinct channels of digital and geopolitical friction (data-privacy divergence, divergence in market governance model along an open/liberal-vs-state-directed spectrum anchored by the US and China as reference poles, and hardware/export-control barriers) to see which, if any, independently suppress trade once the standard gravity factors are absorbed.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="method">
+  <div class="margin"><h2 class="label">Methodology</h2></div>
+  <div>
+    <div class="prose">
+      <p>Estimated via Pseudo-Poisson Maximum Likelihood with high-dimensional fixed effects (PPMLHDFE) — the standard for gravity estimation with zero trade flows and heteroskedastic errors. Exporter-year and importer-year fixed effects absorb multilateral resistance terms in the baseline specification (Model 1); a second specification (Model 2) adds pair fixed effects to absorb any time-invariant bilateral factors, isolating each friction variable’s effect from unobserved, fixed country-pair characteristics. A third specification (Model 2b) restricts to only the friction variables with enough within-pair variation to be genuinely identified under pair fixed effects, rather than trusting the pair-FE estimate on variables that barely move within a pair.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block shell split" id="finding">
+  <div class="margin"><h2 class="label">Finding</h2></div>
+  <div>
+                <div class="prose">
+                  <p>The headline number (β = −0.34, p = 0.016) comes from <strong>market-regime divergence</strong> — how far a country’s economic governance sits along a spectrum anchored by an open, market-liberal model at one end (associated with the US) and a more state-directed, closed model at the other (associated with China) — not narrowly from data localization. As constructed, this variable takes the higher of the exporter’s and importer’s own individual friction scores, so it’s best read as “at least one side of this pair has a strict, state-directed regime,” not a precise pairwise distance metric. The variable that most directly captures data-privacy/localization policy (<code>privacy_max_friction</code>) is insignificant in the baseline specification (β = 0.099, p = 0.599) and is <em>mechanically excluded</em> from the pair fixed-effects model — it’s time-invariant within almost every pair in this sample, so it’s perfectly collinear with the pair fixed effects and can’t be estimated there at all.</p>
+                  <p>Market-regime divergence’s own significance rests on limited identifying variation — only about 11% of pairs switch on this variable across the sample, so the pair-FE estimate leans on a fairly thin slice of “movers.” The strictest test (Model 2b), which keeps only the two variables with genuinely sufficient within-pair movement to trust (trade agreements and hardware/export-control friction), finds <em>no</em> significant effect — hardware friction lands at p = 0.453. So the accurate summary is: one friction channel (market-regime divergence) shows a significant, negative effect on trade in the pair-FE specification, but it doesn’t survive the strictest identification test, and the more literally “digital trade governance” channel (privacy/localization) was never identified as significant at all.</p>
+                </div>
+
+    <figure class="table-fig">
+<figcaption class="table-cap">Coefficient estimates across the three specifications</figcaption>
+<div class="table-wrap">
+<table class="data">
+        <thead>
+          <tr><th scope="col">Coefficient</th><th scope="col">Model 1<br>Baseline</th><th scope="col">Model 2<br>Pair FE</th><th scope="col">Model 2b<br>Dynamic only</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">rta</th><td>−0.006 <span class="dim">(p=.953)</span></td><td>−0.156 <span class="dim">(p=.267)</span></td><td>−0.156 <span class="dim">(p=.266)</span></td></tr>
+          <tr><th scope="row">log_dist</th><td class="strong">−0.565<span class="sig"> ***</span></td><td class="dim">absorbed by pair FE</td><td class="dim">absorbed by pair FE</td></tr>
+          <tr><th scope="row">comlang_off</th><td class="strong">0.519<span class="sig"> **</span></td><td class="dim">absorbed by pair FE</td><td class="dim">absorbed by pair FE</td></tr>
+          <tr><th scope="row">censor_distance</th><td>0.192 <span class="dim">(p=.072)</span></td><td>−0.058 <span class="dim">(p=.072)</span></td><td class="dim">not included</td></tr>
+          <tr><th scope="row">privacy_max_friction</th><td>0.099 <span class="dim">(p=.599)</span></td><td class="dim">dropped, collinear with pair FE</td><td class="dim">not included</td></tr>
+          <tr><th scope="row">regime_max_friction</th><td>−0.417 <span class="dim">(p=.147)</span></td><td class="sig">−0.340 *</td><td class="dim">not included</td></tr>
+          <tr><th scope="row">hardware_max_friction</th><td>−0.031 <span class="dim">(p=.808)</span></td><td>−0.032 <span class="dim">(p=.525)</span></td><td>−0.038 <span class="dim">(p=.453)</span></td></tr>
+        </tbody>
+      </table>
+</div>
+</figure>
+    <p class="table-note">*** p&lt;0.001  ** p&lt;0.01  * p&lt;0.05. N = 6,960 across all three models. Model 2b restricts to variables with sufficient within-pair switching to be identified under pair FE (rta: 10% of pairs, 86 switchers; hardware_max_friction: 29% of pairs).</p>
+  </div>
+</section>
+
+<nav class="pager shell" aria-label="More projects">
+  <a class="prev" href="main-project-a.html"><span class="dir">← Previous</span><span class="t">Geopolitical Risk Transmission and Capital Flight</span></a>
+  <a class="next" href="fx-volatility.html"><span class="dir">Next →</span><span class="t">Continuous-Time FX Volatility Modeling</span></a>
+</nav>
+</main>
+
+<footer class="site-footer shell">
+  <p>© 2026 Dayval Praski Hakim</p>
+  <p>Updated <span data-updated>September 2026</span></p>
+  <p class="colophon">Set in Literata and IBM Plex Mono. Map data from Natural Earth. The charts at the top of project pages illustrate each model and are not results.</p>
+</footer>
+</body>
+</html>
