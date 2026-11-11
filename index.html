@@ -3,15 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dayval Praski Hakim — Quantitative IR &amp; Econometric Research Library (DPH® /V.01)</title>
+  <title>Dayval Praski Hakim — Quantitative IR &amp; Research Library </title>
   <style>
-    /* =====================================================================
-       DPH® /V.01 (2026) — QUANTITATIVE IR & ECONOMETRIC RESEARCH LIBRARY
-       Architecture: CRL-2026 (crl-2026.webflow.io)
-       Typography: Ranade (Indian Type Foundry) + IBM Plex / JetBrains Mono
-       Palette: Aurora: Abyssal — Black (#020508), Deep Water Blue (#071e33),
-                Aurora Green (#00f5a0 / #34d399), Ice White (#f0fdfa)
-       ===================================================================== */
     :root {
       --bg-abyss: #020508;
       --bg-deep-water: #051321;
@@ -250,8 +243,7 @@
     .hidden { display: none !important; }
 
     /* =====================================================================
-       VIEW 1: INDEX (GIANT RANADE HEADER + FOOTNOTES + GEOPOLITICAL ATLAS)
-       ===================================================================== */
+       VIEW 1: INDEX  */
     .hero-wordmark-strip {
       border-top: 1px solid var(--border-water);
       border-bottom: 1px solid var(--border-water);
@@ -507,8 +499,7 @@
     }
 
     /* =====================================================================
-       VIEW 2: LIBRARY (WHEEL vs LIST SWITCHER + 6 ECONOMETRIC STUDIES)
-       ===================================================================== */
+       VIEW 2: LIBRARY */
     .library-toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -838,15 +829,13 @@
 </head>
 <body>
 
-  <!-- LIVING DEEP-WATER & AURORA BOREALIS SHADER CANVAS (LOCKED DEFAULT: ABYSSAL) -->
   <canvas id="auroraWaterCanvas" width="960" height="540"></canvas>
   <div class="grid-lines-overlay"></div>
 
-  <!-- SIGNATURE CRL-2026 UNFOLDING LETTER-STRIP PRELOADER (DPH® /V.01) -->
   <div id="unfoldPreloader">
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.76rem; color:var(--aurora-bright);">
       <span>DPH® // DAYVAL PRASKI HAKIM</span>
-      <span>QUANTITATIVE IR &amp; ECONOMETRIC ARCHIVE</span>
+      <span>QUANTITATIVE IR &amp; ARCHIVE</span>
     </div>
 
     <div class="unfold-strip" aria-hidden="true">
@@ -891,16 +880,7 @@
         </button>
       </nav>
 
-      <div class="crl-header-right">
-        <span class="util-pill" style="pointer-events:none;" title="Surabaya Local Time (WIB, UTC+7)">
-          🕒 Surabaya: <span id="wibClockHeader">WIB</span>
-        </span>
-        <button type="button" id="replayIntroBtn" class="util-pill" title="Replay Unfolding Intro">
-          ↺ Intro
-        </button>
-        <button type="button" id="auroraBoostBtn" class="util-pill" title="Aurora Spectrum">
-          🌊 Aurora: <span id="auroraStateTxt">Abyssal</span>
-        </button>
+      /*<div class="crl-header-right">
         <button type="button" id="soundToggleBtn" class="util-pill" title="Toggle Subtle UI Audio">
           <span id="soundIcon">🔊</span>
         </button>
@@ -922,19 +902,19 @@
       </div>
 
       <div class="crl-editorial-grid">
-        <!-- Column (1): Your authentic casual-yet-sharp voice -->
+        <!-- Column (1) -->
         <div class="col-footnote-1">
           <span class="footnote-num">WHAT I DO</span>
           <p class="footnote-copy">
-            <strong>International relations, but with mathematics.</strong> I started out in International Relations at <strong>Universitas Airlangga</strong> in Surabaya, with a minor in Mathematics. Most of what I model right now is about <strong>commodities, currencies, and capital</strong>—looking at how geopolitical shocks and policy shifts actually move markets once you strip away the noise.
+            <strong>International relations, but with mathematics.</strong> I started out in International Relations at <strong>Universitas Airlangga</strong> in Surabaya, with a minor in Mathematics. Most of what I model right now is about <strong>commodities, currencies, and capital</strong> and right now doing in social dynamics of the states. i guess
           </p>
         </div>
 
-        <!-- Column (2): Methods & Honesty -->
+        <!-- Column (2) -->
         <div class="col-footnote-2">
           <span class="footnote-num">HOW I WORK</span>
           <p class="footnote-copy">
-            My work covers a lot of ground—from <strong>self-exciting Hawkes processes</strong> and <strong>continuous-time Ornstein–Uhlenbeck SDEs</strong> to <strong>PPMLHDFE gravity models, VECM-GARCH, structural credit risk, and score-driven tail models</strong> in <strong>R and Python</strong>. When a model holds up, I show why; when a hypothesis falls apart under placebo testing, I write that up plainly too.
+            My work covers a lot of ground, from <strong>econoetrics</strong> and <strong>statistics</strong> to <strong>mathematical modelling in stochastic and differential</strong> with <strong>R and Python</strong>.
           </p>
         </div>
 
@@ -946,7 +926,7 @@
               <span>ARCHIVE</span>
             </div>
             <div style="font-size:0.84rem; color:var(--text-secondary); line-height:1.5;">
-              Inspect all 6 working papers and econometric projects—including live stochastic simulations, regression tables, and figures.
+              See all papers and projects.
             </div>
             <button type="button" id="enterLibraryHeroBtn" class="enter-btn">
               <span>Enter Library</span>
@@ -1007,7 +987,6 @@
         </div>
       </div>
 
-      <!-- Hidden compatibility controls so static feature check passes cleanly -->
       <div class="hidden" aria-hidden="true">
         <span id="testerSpecReadout"></span>
         <input id="ranadeWeightSlider" type="range" value="500" />
@@ -1026,7 +1005,7 @@
           </div>
           <div>
             <div style="font-weight:700; font-size:1.08rem; color:var(--text-primary);">Stochastic FX &amp; Contagion</div>
-            <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.2rem;">Multivariate Hawkes jump processes &amp; Extended OU SDEs</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.2rem;">Discrete Hawkes jump processes &amp; Extended OU SDEs</div>
           </div>
         </button>
 
@@ -1076,7 +1055,7 @@
             <button type="button" data-view-mode="list" class="mode-btn">List</button>
           </div>
           <span id="libraryCountLabel" style="font-family:var(--font-mono); font-size:0.76rem; color:var(--text-secondary);">
-            SHOWING 6 OF 6 RESEARCH WORKS
+            SHOWING RESEARCH WORKS
           </span>
         </div>
 
@@ -1119,7 +1098,7 @@
               I started out in <strong>International Relations at Universitas Airlangga</strong>, with a minor in <strong>Mathematics</strong>. Most of what I model right now is about commodities and capital.
             </p>
             <p class="footnote-copy" style="margin-top:0.75rem;">
-              My work covers a lot of ground—currency contagion, bilateral digital trade, export volatility, corporate credit risk, and energy futures tails. I do what I like.
+              My work covers a lot of ground and I do what I think is interesting.
             </p>
           </div>
           <div style="border-left:3px solid var(--aurora-bright); padding-left:1rem; margin-top:0.25rem;">
@@ -1127,7 +1106,7 @@
               “All models are wrong, but some are useful.”
             </p>
             <div style="font-family:var(--font-mono); font-size:0.74rem; color:var(--aurora-bright); margin-top:0.35rem;">
-              — GEORGE E. P. BOX, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION (1976)
+              — GEORGE E. P
             </div>
           </div>
         </div>
@@ -1314,9 +1293,7 @@
       } catch (e) {}
     });
 
-    // =========================================================================
-    // PORTED STOCHASTIC SVG SIMULATION ENGINE FROM DAYVAL'S SITE.JS
-    // =========================================================================
+
     const NS = "http://www.w3.org/2000/svg";
     let uidCount = 0;
 
