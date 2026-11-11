@@ -344,9 +344,7 @@
       box-shadow: 0 10px 25px rgba(0, 245, 160, 0.4);
     }
 
-    /* =====================================================================
-       GEOPOLITICAL & MACRO TRANSMISSION ATLAS (RESTYLED IN AURORA: ABYSSAL)
-       ===================================================================== */
+ 
     .atlas-container {
       margin-top: 2.75rem;
       background: linear-gradient(180deg, rgba(5, 22, 38, 0.86) 0%, rgba(2, 8, 15, 0.94) 100%);
@@ -667,9 +665,7 @@
       text-align: right;
     }
 
-    /* =====================================================================
-       SVG STOCHASTIC PLOT STYLES (PORTED FROM DAYVAL'S SITE.JS -> AURORA)
-       ===================================================================== */
+ 
     .p-line { fill: none; stroke: #00f5a0; stroke-width: 1.8px; }
     .p-line-2 { fill: none; stroke: #38bdf8; stroke-width: 1.5px; }
     .p-faint { fill: none; stroke: rgba(148, 184, 208, 0.22); stroke-width: 1px; }
@@ -687,9 +683,7 @@
     .p-label.strong { fill: #f0fdfa; font-weight: 600; }
     .p-label.shock { fill: #fb7185; }
 
-    /* =====================================================================
-       FULL-VIEWPORT TWO-COLUMN SPLIT RESEARCH WORKBENCH (NO EMPTY LEFT VOID)
-       ===================================================================== */
+
     #resourceDrawerBackdrop {
       position: fixed;
       inset: 0;
@@ -761,7 +755,7 @@
       }
     }
 
-    /* Econometric Data Tables inside Drawer */
+    /* Econometric Data Tables */
     .econ-table-wrap {
       overflow-x: auto;
       margin: 0.75rem 0;
@@ -874,7 +868,6 @@
     </div>
   </div>
 
-  <!-- Intro safety net: its own script block, so an error later in the page can never leave you stuck on the intro -->
   <script>
     (function () {
       var intro = document.getElementById('unfoldPreloader');
@@ -910,9 +903,8 @@
       </nav>
     </header>
 
-    <!-- =================================================================== -->
-    <!-- VIEW 1: INDEX (THESIS (1) & (2) + WORLD RISK ATLAS + ENTER LIBRARY) -->
-    <!-- =================================================================== -->
+    <!-- VIEW 1: INDEX -->
+
     <main id="view-index" class="crl-view">
       <div class="hero-wordmark-strip">
         <h1 class="hero-giant-title" id="heroMainTitle">
@@ -929,7 +921,7 @@
         <div class="col-footnote-1">
           <span class="footnote-num">WHAT I DO</span>
           <p class="footnote-copy">
-            <strong>International relations, but with mathematics.</strong> I started out in International Relations at <strong>Universitas Airlangga</strong> in Surabaya, with a minor in Mathematics. Most of what I model right now is about <strong>commodities, currencies, and capital</strong> and right now doing in social dynamics of the states. i guess
+            <strong>International relations, but with mathematics.</strong> I started out in International Relations at <strong>Universitas Airlangga</strong> in Surabaya, with a minor in Mathematics. Most of what I model right now is about <strong>commodities, currencies, and capital</strong> and right now doing in <strong>social dynamics of the states</strong>. I guess
           </p>
         </div>
 
@@ -937,7 +929,7 @@
         <div class="col-footnote-2">
           <span class="footnote-num">HOW I WORK</span>
           <p class="footnote-copy">
-            My work covers a lot of ground, from <strong>econoetrics</strong> and <strong>statistics</strong> to <strong>mathematical modelling in stochastic and differential</strong> with <strong>R and Python</strong>.
+            My work covers a lot of ground, from <strong>econometrics</strong> and <strong>statistics</strong> to <strong>mathematical modelling in stochastic and differential</strong> with <strong>R and Python</strong>.
           </p>
         </div>
 
@@ -953,7 +945,7 @@
             </div>
             <button type="button" id="enterLibraryHeroBtn" class="enter-btn">
               <span>Enter Library</span>
-              <span>(06) →</span>
+              <span> →</span>
             </button>
           </div>
         </div>
@@ -1067,9 +1059,7 @@
       </div>
     </main>
 
-    <!-- =================================================================== -->
-    <!-- VIEW 2: THE LIBRARY (WHEEL / LIST MODE + 6 RESEARCH WORKS)          -->
-    <!-- =================================================================== -->
+    <!-- VIEW 2: THE LIBRARY          -->
     <section id="view-library" class="crl-view hidden">
       <div class="library-toolbar">
         <div style="display:flex; align-items:center; gap:0.85rem;">
@@ -1100,16 +1090,14 @@
       <div id="libraryListContainer" class="archive-list-table hidden"></div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- VIEW 3: ABOUT & CONTACT (CLEANED UP & PROPERLY ATTRIBUTED)          -->
-    <!-- =================================================================== -->
+    <!-- VIEW 3: ABOUT & CONTACT         -->
     <section id="view-about" class="crl-view hidden">
       <div class="hero-wordmark-strip">
         <h2 class="hero-giant-title" style="font-size:clamp(2.2rem, 5.5vw, 4.8rem);">
           International Relations,<br/>With Mathematics.
         </h2>
         <div class="hero-version-tag">
-          <span>UNIVERSITAS AIRLANGGA // SURABAYA</span>
+          <span>UNIVERSITAS AIRLANGGA | SURABAYA</span>
         </div>
       </div>
 
@@ -1118,7 +1106,7 @@
           <div>
             <span class="footnote-num">ABOUT ME</span>
             <p class="footnote-copy">
-              I started out in <strong>International Relations at Universitas Airlangga</strong>, with a minor in <strong>Mathematics</strong>. Most of what I model right now is about commodities and capital.
+              I started out in <strong>International Relations at Universitas Airlangga</strong>, with a minor in <strong>Mathematics</strong>. By now, I'm doing a lot of independent work and learning a ton of the concept and theory by myself with the help of youtube and old plain way (books). Most of what I model right now is about commodities and capital.
             </p>
             <p class="footnote-copy" style="margin-top:0.75rem;">
               My work covers a lot of ground and I do what I think is interesting.
