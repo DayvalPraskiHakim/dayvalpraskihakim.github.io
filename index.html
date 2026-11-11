@@ -825,6 +825,23 @@
       font-size: 0.75rem;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
     }
+
+    /* Mobile only: keep a Close button on screen while a paper scrolls (the original Close sits ~2 screens down on phones) */
+    .drawer-mobile-bar { display: none; }
+    @media (max-width: 960px) {
+      .drawer-mobile-bar {
+        display: flex;
+        flex-shrink: 0;
+        justify-content: flex-end;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        padding: 0.55rem 1rem;
+        background: var(--bg-abyss);
+        border-bottom: 1px solid var(--border-water);
+      }
+      .drawer-mobile-bar .util-pill { padding: 0.55rem 1.1rem; font-size: 0.8rem; }
+    }
   </style>
 </head>
 <body>
@@ -856,6 +873,18 @@
       </button>
     </div>
   </div>
+
+  <!-- Intro safety net: its own script block, so an error later in the page can never leave you stuck on the intro -->
+  <script>
+    (function () {
+      var intro = document.getElementById('unfoldPreloader');
+      if (!intro) return;
+      function leaveIntro() { intro.classList.add('preloader-hidden'); }
+      setTimeout(leaveIntro, 1150);
+      var skip = document.getElementById('skipPreloaderBtn');
+      if (skip) skip.addEventListener('click', leaveIntro);
+    })();
+  </script>
 
   <!-- MAIN APPLICATION SHELL -->
   <div class="app-shell">
@@ -1147,7 +1176,7 @@
           <div class="enter-library-card">
             <span class="footnote-num">DIRECT CORRESPONDENCE</span>
             <p style="font-size:0.83rem; color:var(--text-secondary); margin:0; line-height:1.55;">
-              Open to research collaborations, quantitative risk roles, and academic correspondence.
+              Open to Anything
             </p>
             <div style="font-family:var(--font-mono); font-size:0.73rem; color:var(--text-primary); background:rgba(2,8,15,0.65); padding:0.65rem; border-radius:0.6rem; border:1px solid var(--border-water); word-break:break-all;">
               <div>leq5dayval@gmail.com</div>
@@ -1166,18 +1195,20 @@
       </div>
     </section>
 
-    <!-- FOOTER BAR (CLEANED UP — NO PLACEHOLDER NAMES) -->
     <footer style="border-top:1px solid var(--border-water); padding:1.25rem 1.75rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted); background:rgba(2,6,11,0.75);">
-      <span>© 2026 DAYVAL PRASKI HAKIM • QUANTITATIVE IR &amp; ECONOMETRIC RESEARCH LIBRARY</span>
-      <span>UNIVERSITAS AIRLANGGA • SURABAYA, INDONESIA (AURORA: ABYSSAL EDITION)</span>
+      <span>© 2026 DAYVAL PRASKI HAKIM • QUANTITATIVE IR &amp; RESEARCH LIBRARY</span>
+      <span>Inveria Monevase</span>
     </footer>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- FULL-SCREEN SPLIT-VIEW PROJECT WORKBENCH (LEFT + RIGHT PANES)         -->
+  <!-- FULL-SCREEN SPLIT-VIEW PROJECT        -->
   <!-- ===================================================================== -->
   <div id="resourceDrawerBackdrop" class="hidden">
-    <!-- LEFT PANE (44% WIDTH): LIVE STOCHASTIC PLOT, KEY STATS & PAPER SWITCHER -->
+    <div class="drawer-mobile-bar">
+      <button type="button" id="drawerCloseBtnMobile" class="util-pill" style="border-color:var(--aurora-bright); color:var(--aurora-bright);">Close ✕</button>
+    </div>
+    <!-- LEFT PANE  LIVE STOCHASTIC PLOT, KEY STATS & PAPER SWITCHER -->
     <div class="workbench-left-pane">
       <div style="display:flex; flex-direction:column; gap:1.15rem;">
         <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-water); padding-bottom:0.85rem;">
@@ -1219,7 +1250,7 @@
       </div>
     </div>
 
-    <!-- RIGHT PANE (56% WIDTH): FULL PROJECT NOTES, TABLES & FIGURES -->
+    <!-- RIGHT PANE FULL PROJECT NOTES, TABLES & FIGURES -->
     <aside class="resource-drawer" aria-label="Research Paper Dossier">
       <div style="display:flex; flex-direction:column; gap:1.4rem;">
         <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-water); padding-bottom:1rem;">
@@ -1277,7 +1308,6 @@
   <div id="toastBanner" class="hidden">Action completed</div>
 
   <script>
-    // Non-blocking asynchronous injection of Ranade from Fontshare
     window.addEventListener('DOMContentLoaded', () => {
       try {
         const link = document.createElement('link');
@@ -1557,9 +1587,6 @@
       }
     };
 
-    // =========================================================================
-    // ALL 6 WORKS WRITTEN IN DAYVAL'S NATURAL, CONVERSATIONAL VOICE
-    // =========================================================================
     const libraryWorks = [
       {
         id: 1,
@@ -1748,9 +1775,7 @@
         ]
       }
     ];
-    // =========================================================================
-    // INTERACTIVE WORLD ATLAS DATA (FROM DAYVAL'S INDEX.HTML)
-    // =========================================================================
+
     const atlasPlaces = {
       jkt:  { name: 'Indonesia · Surabaya (Home Base)', desc: 'The Indonesian rupiah (IDR), IDX-listed corporate credit fundamentals, and bilateral export volatility.', works: [1, 2, 3, 5] },
       us:   { name: 'United States', desc: 'US 10-year Treasury yield shocks, trade policy uncertainty (USPUC), and the market-liberal pole of the digital governance spectrum.', works: [2, 3, 4] },
@@ -1853,43 +1878,40 @@
       window._toastTimer = setTimeout(() => el.classList.add('hidden'), 2800);
     }
 
-    document.getElementById('soundToggleBtn').addEventListener('click', () => {
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    if (soundToggleBtn) soundToggleBtn.addEventListener('click', () => {
       soundOn = !soundOn;
-      document.getElementById('soundIcon').textContent = soundOn ? '🔊' : '🔇';
+      const soundIcon = document.getElementById('soundIcon');
+      if (soundIcon) soundIcon.textContent = soundOn ? '🔊' : '🔇';
       if (soundOn) playChime(587.33, 0.08);
     });
 
-    // =========================================================================
-    // UNFOLDING PRELOADER
-    // =========================================================================
+
     const preloader = document.getElementById('unfoldPreloader');
     function hidePreloader() {
       preloader.classList.add('preloader-hidden');
     }
-    setTimeout(hidePreloader, 1150);
 
-    document.getElementById('skipPreloaderBtn').addEventListener('click', () => {
-      hidePreloader();
+    const skipPreloaderBtn = document.getElementById('skipPreloaderBtn');
+    if (skipPreloaderBtn) skipPreloaderBtn.addEventListener('click', () => {
       playChime(523.25, 0.07);
     });
-    document.getElementById('replayIntroBtn').addEventListener('click', () => {
+    const replayIntroBtn = document.getElementById('replayIntroBtn');
+    if (replayIntroBtn) replayIntroBtn.addEventListener('click', () => {
       preloader.classList.remove('preloader-hidden');
       playChime(392.0, 0.1);
       setTimeout(hidePreloader, 1350);
     });
 
-    // Compatibility listeners for hidden elements
     ['ranadeWeightSlider', 'ranadeSizeSlider', 'ranadeItalicToggleBtn', 'ranadePangramBtn'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('click', () => { playChime(440, 0.04); });
     });
 
-    // =========================================================================
-    // DEEP WATER BLUE & AURORA: ABYSSAL SHADER CANVAS
-    // =========================================================================
+
     const bgCanvas = document.getElementById('auroraWaterCanvas');
     const bgCtx = bgCanvas.getContext('2d');
-    let auroraMode = 0; // 0 = Abyssal (Default), 1 = Solar Storm, 2 = Trench Glow
+    let auroraMode = 0; 
     let phase = 0;
 
     function drawAuroraWater() {
@@ -1943,9 +1965,11 @@
     drawAuroraWater();
 
     const auroraLabels = ['Abyssal', 'Solar Storm', 'Trench Glow'];
-    document.getElementById('auroraBoostBtn').addEventListener('click', () => {
+    const auroraBoostBtn = document.getElementById('auroraBoostBtn');
+    if (auroraBoostBtn) auroraBoostBtn.addEventListener('click', () => {
       auroraMode = (auroraMode + 1) % 3;
-      document.getElementById('auroraStateTxt').textContent = auroraLabels[auroraMode];
+      const auroraStateTxt = document.getElementById('auroraStateTxt');
+      if (auroraStateTxt) auroraStateTxt.textContent = auroraLabels[auroraMode];
       playChime(540 + auroraMode * 60, 0.08);
       showToast('🌊 Aurora mode: ' + auroraLabels[auroraMode]);
     });
@@ -2053,7 +2077,6 @@
       setTimeout(mountMiniPlots, 20);
     }
 
-    // Update filter pill labels dynamically to match Dayval's 4 research tracks
     const filterLabelMap = {
       all: 'All Studies',
       systems: 'Stochastic FX',
@@ -2136,7 +2159,6 @@
         });
       }
 
-      // Render Key Quantitative Stats
       document.getElementById('drawerStatsGrid').innerHTML = item.stats.map(st => `
         <div style="background:rgba(6, 24, 42, 0.85); border:1px solid var(--border-water); border-radius:0.75rem; padding:0.85rem;">
           <div style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--aurora-bright);">${st.num}</div>
@@ -2144,7 +2166,6 @@
         </div>
       `).join('');
 
-      // Render Econometric Regression Tables
       const tablesBox = document.getElementById('drawerTablesContainer');
       if (item.tablesHtml) {
         tablesBox.innerHTML = `<span class="footnote-num">ECONOMETRIC ESTIMATION TABLES</span>` + item.tablesHtml;
@@ -2152,7 +2173,6 @@
         tablesBox.innerHTML = '';
       }
 
-      // Render Original Research Figures
       const figsBox = document.getElementById('drawerFiguresContainer');
       if (item.figures && item.figures.length > 0) {
         figsBox.innerHTML = `<span class="footnote-num">EMPIRICAL FIGURES &amp; DIAGNOSTIC PLOTS</span>` +
@@ -2193,6 +2213,10 @@
     document.getElementById('drawerCloseBtn').addEventListener('click', () => {
       drawerBackdrop.classList.add('hidden');
     });
+    const drawerCloseBtnMobile = document.getElementById('drawerCloseBtnMobile');
+    if (drawerCloseBtnMobile) drawerCloseBtnMobile.addEventListener('click', () => {
+      drawerBackdrop.classList.add('hidden');
+    });
     drawerBackdrop.addEventListener('click', (e) => {
       if (e.target === drawerBackdrop) drawerBackdrop.classList.add('hidden');
     });
@@ -2223,7 +2247,6 @@
       }
     });
 
-    // Copy Dayval's Email on About View
     const copyBtn = document.getElementById('copyEmailAboutBtn');
     copyBtn.innerHTML = '<span>Copy leq5dayval@gmail.com</span><span>📋</span>';
     copyBtn.addEventListener('click', () => {
