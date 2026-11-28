@@ -49,14 +49,18 @@
     button { cursor: pointer; }
     a { color: inherit; text-decoration: none; }
 
-    /* Background Deep Water & Aurora Canvas */
-    #auroraWaterCanvas {
+    /* Lightweight Pure-CSS Ambient Deep Water & Aurora Backdrop (0% JS/Canvas CPU) */
+    #auroraAmbientBg {
       position: fixed;
       inset: 0;
-      width: 100%;
-      height: 100%;
       pointer-events: none;
       z-index: 0;
+      background:
+        radial-gradient(ellipse 72% 48% at 50% 68%, rgba(9, 46, 76, 0.52) 0%, rgba(4, 20, 36, 0.32) 55%, rgba(2, 5, 8, 0) 100%),
+        radial-gradient(ellipse 68% 24% at 28% 24%, rgba(0, 245, 160, 0.11) 0%, rgba(0, 245, 160, 0) 70%),
+        radial-gradient(ellipse 65% 24% at 74% 52%, rgba(14, 165, 233, 0.10) 0%, rgba(14, 165, 233, 0) 70%),
+        #020508;
+      contain: strict;
     }
 
     /* Subtle Bathymetric Hairline Grid Overlay */
@@ -127,8 +131,7 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      backdrop-filter: blur(20px);
-      background: rgba(2, 6, 11, 0.84);
+      background: rgba(2, 6, 11, 0.96);
       border-bottom: 1px solid var(--border-water);
       padding: 0.9rem 1.75rem;
       display: grid;
@@ -377,6 +380,8 @@
       width: 100%;
       height: 100%;
       display: block;
+      transform: translateZ(0);
+      contain: layout paint style;
     }
     .atlas-land {
       stroke: rgba(56, 189, 248, 0.34);
@@ -840,7 +845,7 @@
 </head>
 <body>
 
-  <canvas id="auroraWaterCanvas" width="960" height="540"></canvas>
+  <div id="auroraAmbientBg" aria-hidden="true"></div>
   <div class="grid-lines-overlay"></div>
 
   <div id="unfoldPreloader">
@@ -1876,7 +1881,10 @@
       mnl:  { name: 'Philippines & ASEAN-5 (PHP · Sulu)', desc: 'Philippine peso (PHP) ASEAN-5 SDE modeling and Sulu–Mindanao political violence point-process analysis.', works: [2, 7] }
     };
 
+    let activeAtlasKey = null;
     function selectAtlasPlace(key) {
+      if (key === activeAtlasKey) return;
+      activeAtlasKey = key;
       const place = atlasPlaces[key] || atlasPlaces.jkt;
       document.querySelectorAll('.atlas-pin').forEach(p => {
         if (p.dataset.place === key) p.classList.add('on');
@@ -1919,9 +1927,7 @@
           timeZone: 'Asia/Jakarta'
         });
         const tStr = fmt.format(new Date()) + ' WIB';
-        const hEl = document.getElementById('wibClockHeader');
         const aEl = document.getElementById('wibClockAbout');
-        if (hEl) hEl.textContent = tStr;
         if (aEl) aEl.textContent = '● ' + tStr + ' (UTC+7)';
       } catch (e) {}
     }
@@ -1964,100 +1970,14 @@
       window._toastTimer = setTimeout(() => el.classList.add('hidden'), 2800);
     }
 
-    const soundToggleBtn = document.getElementById('soundToggleBtn');
-    if (soundToggleBtn) soundToggleBtn.addEventListener('click', () => {
-      soundOn = !soundOn;
-      const soundIcon = document.getElementById('soundIcon');
-      if (soundIcon) soundIcon.textContent = soundOn ? '🔊' : '🔇';
-      if (soundOn) playChime(587.33, 0.08);
-    });
-
-
-    const preloader = document.getElementById('unfoldPreloader');
-    function hidePreloader() {
-      preloader.classList.add('preloader-hidden');
-    }
-
     const skipPreloaderBtn = document.getElementById('skipPreloaderBtn');
     if (skipPreloaderBtn) skipPreloaderBtn.addEventListener('click', () => {
       playChime(523.25, 0.07);
-    });
-    const replayIntroBtn = document.getElementById('replayIntroBtn');
-    if (replayIntroBtn) replayIntroBtn.addEventListener('click', () => {
-      preloader.classList.remove('preloader-hidden');
-      playChime(392.0, 0.1);
-      setTimeout(hidePreloader, 1350);
     });
 
     ['ranadeWeightSlider', 'ranadeSizeSlider', 'ranadeItalicToggleBtn', 'ranadePangramBtn'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('click', () => { playChime(440, 0.04); });
-    });
-
-
-    const bgCanvas = document.getElementById('auroraWaterCanvas');
-    const bgCtx = bgCanvas.getContext('2d');
-    let auroraMode = 0; 
-    let phase = 0;
-
-    function drawAuroraWater() {
-      const w = bgCanvas.width;
-      const h = bgCanvas.height;
-      bgCtx.fillStyle = '#020508';
-      bgCtx.fillRect(0, 0, w, h);
-
-      const waterGrad = bgCtx.createRadialGradient(
-        w * 0.5 + Math.sin(phase * 0.5) * 110,
-        h * 0.65,
-        40,
-        w * 0.5,
-        h * 0.5,
-        w * 0.75
-      );
-      if (auroraMode === 0) {
-        // Aurora: Abyssal
-        waterGrad.addColorStop(0, 'rgba(9, 46, 76, 0.55)');
-        waterGrad.addColorStop(0.55, 'rgba(4, 20, 36, 0.38)');
-        waterGrad.addColorStop(1, 'rgba(2, 5, 8, 0)');
-      } else if (auroraMode === 1) {
-        waterGrad.addColorStop(0, 'rgba(14, 116, 144, 0.58)');
-        waterGrad.addColorStop(0.55, 'rgba(6, 40, 68, 0.4)');
-        waterGrad.addColorStop(1, 'rgba(2, 5, 8, 0)');
-      } else {
-        waterGrad.addColorStop(0, 'rgba(6, 78, 59, 0.5)');
-        waterGrad.addColorStop(0.55, 'rgba(4, 28, 44, 0.38)');
-        waterGrad.addColorStop(1, 'rgba(2, 5, 8, 0)');
-      }
-      bgCtx.fillStyle = waterGrad;
-      bgCtx.fillRect(0, 0, w, h);
-
-      for (let r = 0; r < 2; r++) {
-        bgCtx.beginPath();
-        for (let x = 0; x <= w; x += 24) {
-          const y = h * (0.24 + r * 0.3) +
-            Math.sin(x * 0.0045 + phase + r * 1.7) * 52 +
-            Math.cos(x * 0.009 - phase * 0.8) * 26;
-          if (x === 0) bgCtx.moveTo(x, y);
-          else bgCtx.lineTo(x, y);
-        }
-        bgCtx.strokeStyle = r === 0 ? 'rgba(0, 245, 160, 0.14)' : 'rgba(14, 165, 233, 0.12)';
-        bgCtx.lineWidth = 46;
-        bgCtx.stroke();
-      }
-
-      phase += 0.011;
-      requestAnimationFrame(drawAuroraWater);
-    }
-    drawAuroraWater();
-
-    const auroraLabels = ['Abyssal', 'Solar Storm', 'Trench Glow'];
-    const auroraBoostBtn = document.getElementById('auroraBoostBtn');
-    if (auroraBoostBtn) auroraBoostBtn.addEventListener('click', () => {
-      auroraMode = (auroraMode + 1) % 3;
-      const auroraStateTxt = document.getElementById('auroraStateTxt');
-      if (auroraStateTxt) auroraStateTxt.textContent = auroraLabels[auroraMode];
-      playChime(540 + auroraMode * 60, 0.08);
-      showToast('🌊 Aurora mode: ' + auroraLabels[auroraMode]);
     });
 
     // =========================================================================
@@ -2104,11 +2024,18 @@
     let currentFilter = 'all';
     let currentMode = 'wheel';
 
+    const miniPlotCache = {};
     function mountMiniPlots() {
       document.querySelectorAll('.mini-stochastic-box').forEach(box => {
         const plotType = box.dataset.plot;
         const seed = Number(box.dataset.seed || 5);
-        if (DRAW[plotType]) DRAW[plotType](box, seed, true);
+        const cacheKey = plotType + ':' + seed;
+        if (miniPlotCache[cacheKey]) {
+          box.innerHTML = miniPlotCache[cacheKey];
+        } else if (DRAW[plotType]) {
+          DRAW[plotType](box, seed, true);
+          miniPlotCache[cacheKey] = box.innerHTML;
+        }
       });
     }
 
